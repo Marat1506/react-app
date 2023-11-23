@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { useState } from 'react'
+import './App.css'
+import Authorisation from './components/Authorisation/authorisation'
+import Container from './components/Container/Container'
+import Footer from './components/Footer/Footer'
+import Home from './components/Home/Home'
+// import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom'
+
+import Profil from './components/Profil/Profil'
+import Task from './components/Task/Task'
+import Favorite from './components/favorite/Favorite'
+import Chat from './components/messenger/Chat'
+import { Box } from '@mui/material'
+
+
+
 
 function App() {
+
+  const [activePage, setActivePage] = useState('home');
+
+  const handlePageChange = (page) => {
+    setActivePage(page);
+  };
+
+  const renderPage = () => {
+    switch (activePage) {
+      case 'home':
+        return <Home />;
+      case 'task':
+        return <Task />;
+      case 'chat':
+        return <Chat />;
+      case 'favorite':
+        return <Favorite />;
+      case 'profil':
+        return <Profil />;
+      default:
+        return null;
+    }
+  };
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Box>
+      <Authorisation />
+      <Container>
+       {renderPage()}
+      </Container>
+      <Footer onPageChange={handlePageChange} activePage={activePage}/>
+    </Box>
+  )
 }
 
-export default App;
+export default App
